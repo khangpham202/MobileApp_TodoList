@@ -2,26 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ModaLInputField extends StatefulWidget {
-  const ModaLInputField(
-      {super.key,
-      required void Function({
-        required DateTime createdTime,
-        required String deadlineTime,
-        required String description,
-        required String name,
-      })
-          addTask});
-  @override
-  State<ModaLInputField> createState() => _ModaLInputFieldState();
-}
-
-class _ModaLInputFieldState extends State<ModaLInputField> {
-  late final void Function({
+  const ModaLInputField({super.key, required this.addTask});
+  final Function({
     required String name,
     required DateTime createdTime,
     required String deadlineTime,
     required String description,
   }) addTask;
+  @override
+  State<ModaLInputField> createState() => _ModaLInputFieldState();
+}
+
+class _ModaLInputFieldState extends State<ModaLInputField> {
   final nameController = TextEditingController();
 
   final deadlineTimeController = TextEditingController();
@@ -62,7 +54,7 @@ class _ModaLInputFieldState extends State<ModaLInputField> {
 
                 if (pickedDate != null) {
                   String formattedDate =
-                      DateFormat('dd-MM-yyyy').format(pickedDate);
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
                   setState(() {
                     deadlineTimeController.text =
                         formattedDate; //set output date to TextField value.
@@ -81,16 +73,13 @@ class _ModaLInputFieldState extends State<ModaLInputField> {
             FloatingActionButton(
               backgroundColor: Color.fromARGB(209, 218, 46, 46),
               onPressed: () {
-                addTask(
+                widget.addTask(
                   name: nameController.text,
                   createdTime: DateTime.now(),
                   deadlineTime: deadlineTimeController.text,
                   description: descriptionController.text,
                 );
-                print(nameController.text);
-                print(DateTime.now());
-                print(deadlineTimeController.text);
-                print(descriptionController.text);
+                Navigator.of(context).pop();
               },
               child: const Text('Add'),
             ),

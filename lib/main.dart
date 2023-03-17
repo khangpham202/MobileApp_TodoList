@@ -39,6 +39,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int calculateDifference(DateTime date) {
+    DateTime now = DateTime.now();
+    return DateTime(date.year, date.month, date.day)
+        .difference(DateTime(now.year, now.month, now.day))
+        .inDays;
+  }
+
   Widget _buildItemCategory(Color color, Function() onTap, String title) {
     return GestureDetector(
       onTap: onTap,
@@ -70,13 +77,13 @@ class _MyHomePageState extends State<MyHomePage> {
     Task(
       name: 'gghjjgh',
       createdTime: DateTime.now(),
-      deadlineTime: "26-12-2002",
+      deadlineTime: "2002-12-03",
       description: "9.5",
     ),
     Task(
       name: '6666666',
       createdTime: DateTime.now(),
-      deadlineTime: "17-03-2023",
+      deadlineTime: "2023-03-17",
       description: "9.5",
     ),
   ];
@@ -165,12 +172,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             SizedBox(
               child: _buildItemCategory(Color(0xffFE9C5E), () {
-                final List<Task> todayTasks = taskList;
-                // .where(
-                //   // ignore: unrelated_type_equality_checks
-                //   (element) => element.deadlineTime == DateTime.now(),
-                // )
-                // .toList();
+                final List<Task> todayTasks = taskList
+                    .where(
+                        // ignore: unrelated_type_equality_checks
+                        (element) =>
+                            calculateDifference(
+                                DateTime.parse(element.deadlineTime)) ==
+                            0)
+                    .toList();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
