@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'models/task_model.dart';
+import 'screens/out_of_date_screen.dart';
 import 'widgets/app_bar_container.dart';
 import 'widgets/modal_input_field.dart';
 import 'screens/today_screen.dart';
 import 'screens/tomorrow_screen.dart';
-import 'screens/upcoming_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -46,7 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
         .inDays;
   }
 
-  Widget _buildItemCategory(Color color, Function() onTap, String title) {
+  Widget _buildItemCategory(
+      Color color, Function() onTap, String title, int quantity) {
     return GestureDetector(
       onTap: onTap,
       child: Column(
@@ -60,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: color.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(12)),
             child: Text(
-              title,
+              "$title - $quantity",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 30,
@@ -73,18 +75,30 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  final List<Task> taskList = [
+  List<Task> taskList = [
     Task(
-      name: 'gghjjgh',
+      name: 'het han',
       createdTime: DateTime.now(),
-      deadlineTime: "2002-12-03",
+      deadlineTime: "2023-03-16",
       description: "9.5",
     ),
     Task(
-      name: '6666666',
+      name: 'mai',
       createdTime: DateTime.now(),
-      deadlineTime: "2023-03-17",
+      deadlineTime: "2023-03-21",
       description: "9.5",
+    ),
+    Task(
+      name: 'nay',
+      createdTime: DateTime.now(),
+      deadlineTime: "2023-03-20",
+      description: "9.5",
+    ),
+    Task(
+      name: 'nay1',
+      createdTime: DateTime.now(),
+      deadlineTime: "2023-03-20",
+      description: "9.9",
     ),
   ];
 
@@ -110,6 +124,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+    String now = dateFormat.format(DateTime.now());
+    List<Task> outOfDateTasks =
+        taskList.where((e) => e.deadlineTime.compareTo(now) < 0).toList();
+    List<Task> todayTasks =
+        taskList.where((e) => e.deadlineTime.compareTo(now) == 0).toList();
+    List<Task> tomorrowTasks =
+        taskList.where((e) => e.deadlineTime.compareTo(now) > 0).toList();
     return AppBarContainer(
       title: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -150,36 +172,29 @@ class _MyHomePageState extends State<MyHomePage> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 22,
+                      fontSize: 35,
                     ),
                   ), //Text
                 ), //Center
               ), //
             ),
             SizedBox(
-              height: 5,
+              height: 10,
             ),
             SizedBox(
-              child: _buildItemCategory(Color(0xffFE9C5E), () {
+              child: _buildItemCategory(Color.fromARGB(255, 0, 0, 0), () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const TomorrowScreen()));
-              }, 'Out of date'),
+                        builder: (context) =>
+                            OutOfDateScreen(outOfDateTask: outOfDateTasks)));
+              }, 'Out of date', outOfDateTasks.length),
             ),
             SizedBox(
-              height: 5,
+              height: 10,
             ),
             SizedBox(
               child: _buildItemCategory(Color(0xffFE9C5E), () {
-                final List<Task> todayTasks = taskList
-                    .where(
-                        // ignore: unrelated_type_equality_checks
-                        (element) =>
-                            calculateDifference(
-                                DateTime.parse(element.deadlineTime)) ==
-                            0)
-                    .toList();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -188,32 +203,23 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 );
-              }, 'Today'),
+              }, 'Today', todayTasks.length),
             ),
             SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              child: _buildItemCategory(Color(0xffFE9C5E), () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const TomorrowScreen()));
-              }, 'Tomorrow'),
-            ),
-            SizedBox(
-              height: 5,
+              height: 10,
             ),
             SizedBox(
               child: _buildItemCategory(Color(0xffFE9C5E), () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const UpComingScreen()));
-              }, 'Up Coming'),
+                        builder: (context) => TomorrowScreen(
+                              tomorrowTask: tomorrowTasks,
+                            )));
+              }, 'Up Coming', tomorrowTasks.length),
             ),
             SizedBox(
-              height: 5,
+              height: 15,
             ),
             Container(
               alignment: Alignment.bottomRight,

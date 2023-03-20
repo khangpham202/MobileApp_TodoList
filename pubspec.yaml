@@ -39,6 +39,7 @@ dependencies:
   build_runner:
   flutter_gen_runner:
   intl: ^0.18.0
+  dropdown_button2: ^2.0.0
 
 dev_dependencies:
   flutter_test:

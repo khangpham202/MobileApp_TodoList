@@ -79,7 +79,18 @@ class _ModaLInputFieldState extends State<ModaLInputField> {
                   deadlineTime: deadlineTimeController.text,
                   description: descriptionController.text,
                 );
-                Navigator.of(context).pop();
+                Navigator.of(
+                  context,
+                ).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Add Successfully !',
+                      textAlign: TextAlign.center,
+                    ),
+                    backgroundColor: Colors.teal,
+                  ),
+                );
               },
               child: const Text('Add'),
             ),

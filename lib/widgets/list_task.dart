@@ -12,16 +12,18 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.only(left: 100),
       child: DataTable(
         columnSpacing: 30.0,
         columns: _buildHeader(),
-        rows: _buildBodyTable(),
+        rows: _buildBodyTable(context),
       ),
     );
   }
 
-  List<DataRow> _buildBodyTable() {
+  List<DataRow> _buildBodyTable(context) {
     return List<DataRow>.generate(
       taskList.length,
       (index) => DataRow(
@@ -35,14 +37,21 @@ class TaskList extends StatelessWidget {
             ),
           ),
           DataCell(
-            IconButton(
-              onPressed: () {
-                print(taskList[index].createdTime);
-                print(taskList[index].deadlineTime);
+            PopupMenuButton(
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+                PopupMenuItem<int>(
+                  value: 1,
+                  child: Text("Show more"),
+                ),
+                PopupMenuItem<int>(
+                  value: 2,
+                  child: Text("Delete"),
+                ),
+              ],
+              onSelected: (int value) {
+                (value == 2) ? taskList.removeAt(index) : print("123");
               },
-              icon: Icon(
-                Icons.format_align_justify_rounded,
-              ),
+              position: PopupMenuPosition.under,
             ),
           ),
         ],
