@@ -77,28 +77,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Task> taskList = [
     Task(
-      name: 'het han',
+      name: 'Do the Excercise',
       createdTime: DateTime.now(),
-      deadlineTime: "2023-03-16",
-      description: "9.5",
+      deadlineTime: "2023-03-22",
+      description:
+          "physical activity that you do to make your body strong and healthy",
     ),
     Task(
-      name: 'mai',
+      name: 'Go Shopping',
       createdTime: DateTime.now(),
-      deadlineTime: "2023-03-21",
-      description: "9.5",
+      deadlineTime: "2023-03-23",
+      description: "Buy some new couples of product like shoes, tablets, ...",
     ),
     Task(
-      name: 'nay',
+      name: 'Take a trip to the beach',
       createdTime: DateTime.now(),
-      deadlineTime: "2023-03-20",
-      description: "9.5",
+      deadlineTime: "2023-06-23",
+      description: "Da Nang City",
     ),
     Task(
-      name: 'nay1',
+      name: 'Visit Paris',
       createdTime: DateTime.now(),
-      deadlineTime: "2023-03-20",
-      description: "9.9",
+      deadlineTime: "2023-03-24",
+      description:
+          "Going to Eiffel Tower, Arc of Triumph, Cruise on the Seine, ....",
     ),
   ];
 

@@ -4,17 +4,20 @@ import '../models/task_model.dart';
 class TaskList extends StatelessWidget {
   final List<Task> taskList;
   final Function(int index) deleteItem;
+  final Function(int index) showMore;
   const TaskList({
     required this.taskList,
     required this.deleteItem,
+    required this.showMore,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: EdgeInsets.all(25.0),
       elevation: 0,
-      margin: EdgeInsets.only(left: 100),
+      // margin: EdgeInsets.only(left: 100),
       child: DataTable(
         columnSpacing: 30.0,
         columns: _buildHeader(),
@@ -49,7 +52,7 @@ class TaskList extends StatelessWidget {
                 ),
               ],
               onSelected: (int value) {
-                (value == 2) ? taskList.removeAt(index) : print("123");
+                (value == 2) ? deleteItem(index) : showMore(index);
               },
               position: PopupMenuPosition.under,
             ),
