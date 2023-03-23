@@ -36,7 +36,7 @@ class _ModaLInputFieldState extends State<ModaLInputField> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             TextField(
               decoration: const InputDecoration(labelText: 'Name of task'),
               controller: nameController,

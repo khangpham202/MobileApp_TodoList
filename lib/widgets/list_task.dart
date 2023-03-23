@@ -5,10 +5,12 @@ class TaskList extends StatelessWidget {
   final List<Task> taskList;
   final Function(int index) deleteItem;
   final Function(int index) showMore;
+  final Function(int index) editItem;
   const TaskList({
     required this.taskList,
     required this.deleteItem,
     required this.showMore,
+    required this.editItem,
     super.key,
   });
 
@@ -50,9 +52,23 @@ class TaskList extends StatelessWidget {
                   value: 2,
                   child: Text("Delete"),
                 ),
+                PopupMenuItem<int>(
+                  value: 3,
+                  child: Text("Edit"),
+                ),
               ],
               onSelected: (int value) {
-                (value == 2) ? deleteItem(index) : showMore(index);
+                switch (value) {
+                  case 1:
+                    showMore(index);
+                    break;
+                  case 2:
+                    deleteItem(index);
+                    break;
+                  case 3:
+                    editItem(index);
+                    break;
+                }
               },
               position: PopupMenuPosition.under,
             ),

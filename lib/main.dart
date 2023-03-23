@@ -167,6 +167,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             SizedBox(
               child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(60),
+                ),
                 color: Colors.green,
                 child: Center(
                   child: Text(
@@ -174,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 35,
+                      fontSize: 33,
                     ),
                   ), //Text
                 ), //Center
